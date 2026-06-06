@@ -18,7 +18,7 @@ const SalesInvoice = React.forwardRef(
   "
       >
         <h1 className="text-2xl md:text-3xl font-bold text-center">
-          FrostMart POS
+          SnowFreez
         </h1>
 
         <p className="text-center text-gray-500 text-sm">Frozen Food Store</p>
