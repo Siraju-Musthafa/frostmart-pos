@@ -5,7 +5,7 @@ const {
   getAll,
 } = require("../controllers/customer.controller")
 
-const { protect } =
+const { protect,authorize } =
   require("../middleware/auth.middleware")
 
 const router = express.Router()

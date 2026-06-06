@@ -8,7 +8,7 @@ const {
 )
 
 const {
-  protect,
+  protect,authorize
 } = require(
   "../middleware/auth.middleware"
 )
