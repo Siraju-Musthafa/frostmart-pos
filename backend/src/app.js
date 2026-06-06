@@ -17,7 +17,11 @@ const supplierRoutes = require("./routes/supplier.routes");
 const purchaseRoutes = require("./routes/purchase.routes");
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
