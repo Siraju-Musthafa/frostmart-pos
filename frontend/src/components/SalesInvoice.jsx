@@ -8,10 +8,13 @@ const SalesInvoice = React.forwardRef(
     return (
       <div
         ref={ref}
+        style={{
+          backgroundColor: "#ffffff",
+          color: "#000000",
+        }}
         className="
     p-4
     md:p-6
-    bg-white
     w-full
     max-w-[500px]
     mx-auto
@@ -21,8 +24,10 @@ const SalesInvoice = React.forwardRef(
           SnowFreez
         </h1>
 
-        <p className="text-center text-gray-500 text-sm">Frozen Food Store</p>
-        <div className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm" style={{ color: "#6b7280" }}>
+          Frozen Food Store
+        </p>
+        <div className="text-center text-sm" style={{ color: "#6b7280" }}>
           <p>Phone: +91 XXXXXXXXXX</p>
           <p>Kozhikode, Kerala</p>
         </div>
@@ -84,7 +89,7 @@ const SalesInvoice = React.forwardRef(
           <span>Total</span>
           <span>₹{bill.totalAmount}</span>
         </div>
-        <p className="text-center mt-6 text-sm text-gray-500">
+        <p className="text-center mt-6 text-sm" style={{ color: "#6b7280" }}>
           Thank you for your purchase
         </p>
       </div>
