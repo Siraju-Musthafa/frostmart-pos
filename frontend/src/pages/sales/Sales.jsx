@@ -47,19 +47,63 @@ export default function Sales() {
     }
   };
 
-  const downloadPDF = async () => {
+  // const downloadPDF = async () => {
+  //   const element = invoiceRef.current;
+
+  //   const canvas = await html2canvas(element);
+
+  //   const data = canvas.toDataURL("image/png");
+
+  //   const pdf = new jsPDF();
+
+  //   pdf.addImage(data, "PNG", 10, 10, 180, 0);
+
+  //   pdf.save(`${selectedBill.billNumber}.pdf`);
+  // };
+const downloadPDF = async () => {
+  try {
     const element = invoiceRef.current;
 
-    const canvas = await html2canvas(element);
+    if (!element) {
+      toast.error("Invoice not found");
+      return;
+    }
 
-    const data = canvas.toDataURL("image/png");
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+    });
 
-    const pdf = new jsPDF();
+    const imgData = canvas.toDataURL("image/png");
 
-    pdf.addImage(data, "PNG", 10, 10, 180, 0);
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+
+    const pdfHeight =
+      (canvas.height * pdfWidth) /
+      canvas.width;
+
+    pdf.addImage(
+      imgData,
+      "PNG",
+      0,
+      0,
+      pdfWidth,
+      pdfHeight
+    );
 
     pdf.save(`${selectedBill.billNumber}.pdf`);
-  };
+
+  } catch (error) {
+    console.error(error);
+    toast.error("PDF download failed");
+  }
+};
 
   const fetchSales = async () => {
     try {
