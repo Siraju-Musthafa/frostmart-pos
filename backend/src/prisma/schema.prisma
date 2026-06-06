@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("STAFF")
+  createdAt DateTime @default(now())
+
+  bills Bill[]
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  name          String
+  barcode       String?   @unique
+  purchasePrice Float
+  sellingPrice  Float
+  stock         Int
+  minimumStock  Int       @default(5)
+  expiryDate    DateTime?
+  brand         String?
+  image         String?
+  createdAt     DateTime  @default(now())
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  billItems BillItem[]
+  purchaseItems PurchaseItem[]
+}
+
+model Customer {
+  id             String   @id @default(cuid())
+  hotelName      String
+  ownerName      String?
+  phone          String   @unique
+  address        String?
+  creditLimit    Float    @default(0)
+  currentBalance Float    @default(0)
+  createdAt      DateTime @default(now())
+
+  bills  Bill[]
+  ledger Ledger[]
+}
+
+model Bill {
+  id             String   @id @default(cuid())
+  billNumber     String   @unique
+  subtotal       Float
+  taxAmount      Float
+  discountAmount Float
+  totalAmount    Float
+  paidAmount     Float
+  dueAmount      Float
+  paymentMethod  String
+  createdAt      DateTime @default(now())
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+
+  items BillItem[]
+}
+
+model BillItem {
+  id       String @id @default(cuid())
+  quantity Int
+  price    Float
+  subtotal Float
+
+  billId String
+  bill   Bill   @relation(fields: [billId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Ledger {
+  id          String   @id @default(cuid())
+  type        String
+  amount      Float
+  description String?
+  createdAt   DateTime @default(now())
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+}
+
+
+model Supplier {
+
+  id        String   @id @default(cuid())
+
+  name      String
+
+  phone     String?
+
+  address   String?
+
+  createdAt DateTime @default(now())
+
+  purchases Purchase[]
+}
+
+
+model Purchase {
+
+  id            String   @id @default(cuid())
+
+  supplierId    String
+
+  supplier      Supplier @relation(fields: [supplierId],references: [id])
+
+  totalAmount   Float
+
+  createdAt     DateTime @default(now())
+
+  items         PurchaseItem[]
+}
+
+model PurchaseItem {
+
+  id            String   @id @default(cuid())
+
+  purchaseId    String
+
+  purchase      Purchase @relation(fields: [purchaseId],references: [id])
+
+  productId     String
+
+  product       Product @relation(fields: [productId],references: [id])
+
+  quantity      Int
+
+  purchasePrice Float
+}
