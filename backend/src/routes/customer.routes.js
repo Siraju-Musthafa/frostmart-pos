@@ -10,8 +10,8 @@ const { protect } =
 
 const router = express.Router()
 
-router.post("/", protect, create)
+router.post("/", protect, create,authorize("ADMIN","STAFF"))
 
-router.get("/", protect, getAll)
+router.get("/", protect, getAll,authorize("ADMIN","STAFF"))
 
 module.exports = router

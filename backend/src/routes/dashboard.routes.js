@@ -20,13 +20,13 @@ const router =
 router.get(
   "/stats",
   protect,
-  stats
+  stats,authorize("ADMIN","STAFF")
 )
 
 router.get(
   "/monthly-sales",
   protect,
-  monthlySales
+  monthlySales,authorize("ADMIN","STAFF")
 )
 
 module.exports = router

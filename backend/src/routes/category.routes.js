@@ -21,9 +21,9 @@ router.post(
   create
 )
 
-router.get("/", protect, getAll)
+router.get("/", protect,authorize("ADMIN","STAFF"), getAll)
 
-router.put("/:id",protect,update);
-router.delete("/:id",protect,remove);
+router.put("/:id",protect,update,authorize("ADMIN","STAFF"));
+router.delete("/:id",protect,remove,authorize("ADMIN","STAFF"));
 
 module.exports = router

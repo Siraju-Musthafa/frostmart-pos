@@ -21,7 +21,10 @@ router.post(
   create
 )
 
-router.get("/", protect, getAll)
+router.get("/", protect,authorize(
+    "ADMIN",
+    "STAFF"
+  ), getAll)
 router.delete(
   "/:id",
   protect,

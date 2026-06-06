@@ -10,7 +10,7 @@ const {
 )
 
 const {
-  protect,
+  protect,authorize
 } = require(
   "../middleware/auth.middleware"
 )
@@ -21,19 +21,21 @@ const router =
 router.post(
   "/",
   protect,
-  create
+  create,authorize("ADMIN","STAFF")
 )
 
 router.get(
   "/",
   protect,
-  allPurchases
+  allPurchases,
+  authorize("ADMIN","STAFF")
 )
 
 router.delete(
   "/:id",
   protect,
-  removePurchase
+  removePurchase,
+  authorize("ADMIN","STAFF")
 );
 
 module.exports = router

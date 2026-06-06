@@ -4,13 +4,13 @@ const {
   create,remove,update
 } = require("../controllers/bill.controller")
 
-const { protect } =
+const { protect,authorize } =
   require("../middleware/auth.middleware")
 
 const router = express.Router()
 
-router.post("/", protect, create);
-router.delete("/:id", protect, remove);
-router.put("/:id", protect, update);
+router.post("/", protect,authorize("ADMIN"), create);
+router.delete("/:id", protect,authorize("ADMIN"), remove);
+router.put("/:id", protect,authorize("ADMIN"), update);
 
 module.exports = router

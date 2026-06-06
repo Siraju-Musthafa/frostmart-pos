@@ -8,7 +8,7 @@ const {
 )
 
 const {
-  protect,
+  protect,authorize
 } = require(
   "../middleware/auth.middleware"
 )
@@ -19,7 +19,8 @@ const router =
 router.get(
   "/",
   protect,
-  getAllSales
+  getAllSales,
+  authorize("ADMIN","STAFF")
 )
 
 module.exports = router
