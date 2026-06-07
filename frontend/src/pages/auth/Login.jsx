@@ -120,10 +120,12 @@ import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -266,22 +268,34 @@ export default function Login() {
                 style={{ color: "#38b6ff" }}>
                 Password
               </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="••••••••"
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg text-white text-sm outline-none transition-all"
-                style={{ background: "#0d1a2e", border: "1px solid #1a2e4a", caretColor: "#38b6ff" }}
-                onFocus={e => {
-                  e.target.style.borderColor = "#38b6ff";
-                  e.target.style.boxShadow = "0 0 0 3px rgba(56,182,255,0.12)";
-                }}
-                onBlur={e => {
-                  e.target.style.borderColor = "#1a2e4a";
-                  e.target.style.boxShadow = "none";
-                }}
-              />
+              {/* ── Password field with show/hide toggle ── */}
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="••••••••"
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 pr-11 rounded-lg text-white text-sm outline-none transition-all"
+                  style={{ background: "#0d1a2e", border: "1px solid #1a2e4a", caretColor: "#38b6ff" }}
+                  onFocus={e => {
+                    e.target.style.borderColor = "#38b6ff";
+                    e.target.style.boxShadow = "0 0 0 3px rgba(56,182,255,0.12)";
+                  }}
+                  onBlur={e => {
+                    e.target.style.borderColor = "#1a2e4a";
+                    e.target.style.boxShadow = "none";
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center transition-colors"
+                  style={{ color: "#38b6ff", background: "transparent", border: "none", cursor: "pointer", padding: "2px" }}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              </div>
             </div>
 
             <div className="flex justify-end">
@@ -311,36 +325,9 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="flex items-center my-6">
-            {/* <div className="flex-1 h-px" style={{ background: "#0d1a2e" }} />
-            <span className="mx-4 text-xs" style={{ color: "#1a2e4a" }}>OR CONTINUE WITH</span> */}
             <div className="flex-1 h-px" style={{ background: "#0d1a2e" }} />
           </div>
-
-          {/* Social buttons */}
-          {/* {[
-            { label: "Continue with phone", icon: "📱" },
-            { label: "Continue with Google", icon: "G" },
-            { label: "Continue with Facebook", icon: "f" },
-          ].map((btn) => (
-            <button
-              key={btn.label}
-              className="w-full flex items-center px-4 py-3 rounded-lg text-sm font-semibold mb-3 transition-all"
-              style={{ border: "1px solid #1a2e4a", color: "#8aafd4", background: "transparent" }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = "#38b6ff";
-                e.currentTarget.style.color = "#e8f4ff";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = "#1a2e4a";
-                e.currentTarget.style.color = "#8aafd4";
-              }}
-            >
-              <span className="w-6 text-center mr-3">{btn.icon}</span>
-              {btn.label}
-            </button>
-          ))} */}
 
           <p className="text-center mt-8 text-sm" style={{ color: "#2d4a6a" }}>
             Don't have an account?{" "}
@@ -358,24 +345,19 @@ export default function Login() {
 function FrostLogo({ size = 40 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Outer circle */}
       <circle cx="24" cy="24" r="23" fill="#0d2347" stroke="#38b6ff" strokeWidth="1.5" />
-      {/* Snowflake arms */}
       <line x1="24" y1="8" x2="24" y2="40" stroke="#38b6ff" strokeWidth="2.2" strokeLinecap="round" />
       <line x1="8" y1="24" x2="40" y2="24" stroke="#38b6ff" strokeWidth="2.2" strokeLinecap="round" />
       <line x1="12.7" y1="12.7" x2="35.3" y2="35.3" stroke="#38b6ff" strokeWidth="2.2" strokeLinecap="round" />
       <line x1="35.3" y1="12.7" x2="12.7" y2="35.3" stroke="#38b6ff" strokeWidth="2.2" strokeLinecap="round" />
-      {/* Branch tips on vertical */}
       <line x1="24" y1="8" x2="20" y2="13" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="24" y1="8" x2="28" y2="13" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="24" y1="40" x2="20" y2="35" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="24" y1="40" x2="28" y2="35" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
-      {/* Branch tips on horizontal */}
       <line x1="8" y1="24" x2="13" y2="20" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="8" y1="24" x2="13" y2="28" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="40" y1="24" x2="35" y2="20" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
       <line x1="40" y1="24" x2="35" y2="28" stroke="#38b6ff" strokeWidth="1.4" strokeLinecap="round" />
-      {/* Center dot */}
       <circle cx="24" cy="24" r="3.5" fill="#38b6ff" />
       <circle cx="24" cy="24" r="1.8" fill="#0d2347" />
     </svg>
